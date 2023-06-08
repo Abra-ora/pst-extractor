@@ -1,4 +1,4 @@
-package example;
+package main.java.pstReader;
 
 import com.pff.*;
 import org.apache.log4j.BasicConfigurator;

@@ -1,9 +1,8 @@
-package example.ui;
+package main.java.pstReader.ui;
 
-import example.repo.PstReaderRepo;
-import example.repo.PstReaderRepo;
-import example.repo.impl.PstReaderImpl;
-import example.utils.FilesAndFoldersManagement;
+import main.java.pstReader.repo.PstReaderRepo;
+import main.java.pstReader.repo.impl.PstReaderImpl;
+import main.java.pstReader.utils.FilesAndFoldersManagement;
 
 import java.io.IOException;
 import java.util.Scanner;

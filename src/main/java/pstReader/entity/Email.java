@@ -1,4 +1,4 @@
-package example.entity;
+package main.java.pstReader.entity;
 
 import com.pff.PSTException;
 import com.pff.PSTMessage;

@@ -1,12 +1,12 @@
-package example;
+package main.java.pstReader;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import example.repo.PstReaderRepo;
-import example.repo.impl.PstReaderImpl;
-import example.ui.TerminalMenu;
-import example.utils.FilesAndFoldersManagement;
+import main.java.pstReader.repo.PstReaderRepo;
+import main.java.pstReader.repo.impl.PstReaderImpl;
+import main.java.pstReader.ui.TerminalMenu;
+import main.java.pstReader.utils.FilesAndFoldersManagement;
 import java.io.IOException;
 
 public class Main {

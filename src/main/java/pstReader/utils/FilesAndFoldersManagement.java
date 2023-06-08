@@ -1,8 +1,8 @@
-package example.utils;
+package main.java.pstReader.utils;
 
 
-import example.entity.Attachment;
-import example.entity.Email;
+import main.java.pstReader.entity.Attachment;
+import main.java.pstReader.entity.Email;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;

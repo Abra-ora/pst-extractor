@@ -1,14 +1,15 @@
-package example.repo.impl;
+package main.java.pstReader.repo.impl;
 
 import com.pff.PSTException;
 import com.pff.PSTFile;
 import com.pff.PSTFolder;
 import com.pff.PSTMessage;
-import example.entity.Email;
-import example.repo.PstReaderRepo;
-import example.utils.FilesAndFoldersManagement;
+import main.java.pstReader.entity.Email;
+import main.java.pstReader.repo.PstReaderRepo;
+import main.java.pstReader.utils.FilesAndFoldersManagement;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
-package example.repo;
+package main.java.pstReader.repo;
 
 import com.pff.PSTFolder;
-import com.pff.PSTMessage;
 
 import java.util.List;
 
