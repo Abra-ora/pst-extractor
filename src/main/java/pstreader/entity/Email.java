@@ -1,5 +1,8 @@
-package main.java.pstReader.entity;
+    package main.java.pstreader.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pff.PSTException;
 import com.pff.PSTMessage;
 
@@ -8,23 +11,37 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Email {
+
+    @JsonProperty("Id")
+    private long id;
+    @JsonProperty("Sender")
     private String sender;
+    @JsonProperty("Receivers")
     private List<String> receivers = new ArrayList<>();
+    @JsonProperty("Subject")
     private String subject;
+    @JsonProperty("Email content")
     private String body;
+    @JsonProperty("Email path")
+    private String path;
+    @JsonProperty("Submit date")
     private Date clientSubmitDate;
+    @JsonIgnore
     private boolean hasAttachment;
+    @JsonProperty("Email attachments")
     private List<Attachment> attachments = new ArrayList<>();
 
     public Email(String sender, List<String> receivers, String subject, String body, Date clientSubmitDate,
-                 List<Attachment> attachments) {
+                 List<Attachment> attachments, boolean hasAttachment) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.clientSubmitDate = clientSubmitDate;
         this.attachments = attachments;
+        this.hasAttachment = hasAttachment;
     }
 
     public static Email emailMapper(PSTMessage pstMessage){
@@ -32,9 +49,11 @@ public class Email {
                 pstMessage.getSenderEmailAddress(),
                 gerReceiversFromPSTMessage(pstMessage),
                 pstMessage.getSubject(),
-                pstMessage.getBody(),
+                pstMessage.getBody().isEmpty() ?
+                        pstMessage.getBodyHTML() : pstMessage.getBody(),
                 pstMessage.getClientSubmitTime(),
-                getAttachmentFromPSTMessage(pstMessage)
+                getAttachmentFromPSTMessage(pstMessage),
+                pstMessage.hasAttachments()
                 );
     }
     public String getSender() {
@@ -88,7 +107,7 @@ public class Email {
         try{
            if(pstMessage.hasAttachments()){
                for (int i = 0; i < pstMessage.getNumberOfAttachments() ; i++) {
-                   extractedAttachment.add(Attachment.attachmentMapper(pstMessage.getAttachment(i)));
+                   extractedAttachment.add(Attachment.simpleMapper(pstMessage.getAttachment(i)));
                }
            }
            return extractedAttachment;
@@ -109,7 +128,7 @@ public class Email {
     }
 
     public boolean isHasAttachment() {
-        return hasAttachment;
+        return this.hasAttachment;
     }
 
     public void setHasAttachment(boolean hasAttachment) {
@@ -118,5 +137,36 @@ public class Email {
 
     public void setClientSubmitDate(Date clientSubmitDate) {
         this.clientSubmitDate = clientSubmitDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return "Email{" +
+                "id=" + id +
+                ", sender='" + sender + '\'' +
+                ", receivers=" + receivers +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", path='" + path + '\'' +
+                ", clientSubmitDate=" + clientSubmitDate +
+                ", hasAttachment=" + hasAttachment +
+                ", attachments=" + attachments +
+                '}';
     }
 }
