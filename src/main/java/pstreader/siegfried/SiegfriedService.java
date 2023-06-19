@@ -14,11 +14,13 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Base64;
 
-import static main.java.pstreader.StaticVars.*;
 
 public class SiegfriedService {
 
     public static final Logger logger = LogManager.getLogger(SiegfriedService.class);
+    public static final String SIEGFRIED_HOST = "localhost";
+    public static final int SIEGFRIED_PORT = 19000;
+    public static final String SIEGFRIED_ACTION = "identify";
     private final Base64.Encoder base64 = Base64.getEncoder();
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
@@ -29,10 +31,10 @@ public class SiegfriedService {
         this.attachmentWriter = attachmentWriter;
     }
 
-    private HttpUrl getSiegfriedUrl(Attachment attachment) throws IOException {
+    private HttpUrl getSiegfriedUrl(Attachment attachment, String attachmentsDirPathParam) throws IOException {
         // create attachment file
-        attachmentWriter.createAttachment(ATTACHMENT_DIR, attachment);
-        File attachmentsDir = new File(ATTACHMENT_DIR);
+        attachmentWriter.createAttachment(attachmentsDirPathParam, attachment);
+        File attachmentsDir = new File(attachmentsDirPathParam);
         Path attachmentsDirPath = Path.of(attachmentsDir.getAbsolutePath());
         byte[] attachmentBytes = attachmentsDirPath.resolve(attachment.getName()).toString().getBytes();
         return new HttpUrl.Builder()
@@ -46,10 +48,10 @@ public class SiegfriedService {
                 .build();
     }
 
-    public Attachment postToSiegfried(Attachment attachment) throws IOException {
+    public Attachment postToSiegfried(Attachment attachment, String attachmentsDirPath) throws IOException {
         SiegfriedResponse siegfriedResponse = new SiegfriedResponse();
         try{
-            HttpUrl url = getSiegfriedUrl(attachment);
+            HttpUrl url = getSiegfriedUrl(attachment, attachmentsDirPath);
             Request request = new Request.Builder()
                     .get()
                     .url(url)

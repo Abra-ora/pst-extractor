@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.stream.Stream;
 
 public class FilesAndFoldersManagement {
 
+    public static String outputDir;
+    public static String attachmentsDir = "/attachments/";
     private static final Logger logger =
             LogManager.getLogger(FilesAndFoldersManagement.class);
 
@@ -61,7 +64,23 @@ public class FilesAndFoldersManagement {
 
     public void checkIfPathIsValid(String path) {
         File file = new File(path);
-        if (!file.exists())
-            logger.error("=> The path is not correct or the file was not found!");
+          try {
+            if (!file.exists()) {
+                logger.error("=> The path is not correct or the file was not found!");
+                throw new NoSuchFileException("No such file");
+            }
+        }catch (NoSuchFileException e){
+              e.printStackTrace();
+        }
+    }
+
+    public static void checkIfDir(String path) {
+        File file = new File(path);
+        if (file.isDirectory()){
+            outputDir = path+"/";
+        }else{
+            outputDir = "./";
+            logger.error("No such directory, check ./ to see the results");
+        }
     }
 }

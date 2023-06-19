@@ -22,6 +22,8 @@ public class Main {
         PstReaderRepo pstReaderRepo = new PstReaderImpl(filesAndFoldersManagement, siegfriedService);
 
         filesAndFoldersManagement.checkIfPathIsValid(args[0]);
+        FilesAndFoldersManagement.checkIfDir(args[1]);
+
         pstReaderRepo.createTreeStructure(args[0]);
 
 

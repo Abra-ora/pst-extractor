@@ -11,5 +11,5 @@ public interface PstReaderRepo {
     public void createTreeStructure(String pstFilePath);
     public void createEmails(PSTFolder pstFolder, ExtractedMetadata extractedMetadata, String dirName);
     public void createSubTree(PSTFolder pstFolder, ExtractedMetadata extractedMetadata, List<String> pathLevels);
-    public void identifyAndCreateAttachments(ExtractedMetadata extractedMetadata);
+    public void identifyAndCreateAttachments(ExtractedMetadata extractedMetadata, String attachmentsDirPath);
 }

@@ -6,9 +6,8 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 
-import static main.java.pstreader.StaticVars.MAX_ATTACHMENT_SIZE;
-
 public class AttachmentWriter {
+    private static final int BUFFER_SIZE = 8192;
 
     FilesAndFoldersManagement filesAndFoldersManagement;
     public static final Logger logger = LogManager.getLogger(AttachmentWriter.class);
@@ -18,8 +17,7 @@ public class AttachmentWriter {
 
     public boolean createAttachment(String pathDir, Attachment attachment) throws IOException {
         boolean isAttachmentCreated = false;
-        if(attachment.getContent().read() <= MAX_ATTACHMENT_SIZE){
-            byte[] buf = new byte[MAX_ATTACHMENT_SIZE];
+            byte[] buf = new byte[BUFFER_SIZE];
             logger.info("Path dir : "+pathDir+" - attachment : "+attachment.getName());
             filesAndFoldersManagement.createDir(pathDir);
             try (OutputStream outputStream = new FileOutputStream(pathDir + "/" + attachment.getName())) {
@@ -32,9 +30,6 @@ public class AttachmentWriter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
-            logger.error("attachment cannot be created, its size exceeds the maximum limit allowed");
-        }
         return isAttachmentCreated;
     }
 }

@@ -4,7 +4,6 @@ import com.pff.PSTException;
 import com.pff.PSTFile;
 import com.pff.PSTFolder;
 import com.pff.PSTMessage;
-import main.java.pstreader.entity.Attachment;
 import main.java.pstreader.entity.Email;
 import main.java.pstreader.entity.ExtractedMetadata;
 import main.java.pstreader.repo.PstReaderRepo;
@@ -15,13 +14,12 @@ import main.java.pstreader.utils.JsonMapper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import static main.java.pstreader.StaticVars.ATTACHMENT_DIR;
-import static main.java.pstreader.StaticVars.OUTPUT_DIR;
 
 public class PstReaderImpl implements PstReaderRepo {
 
@@ -52,11 +50,16 @@ public class PstReaderImpl implements PstReaderRepo {
             PSTFile pstFile = new PSTFile(pstFilePath);
             PSTFolder rootFolder = pstFile.getRootFolder();
 
+            String pstFileName = new File(pstFilePath).getName();
+            String outDir = FilesAndFoldersManagement.outputDir+pstFileName+"/";
+            String attachmentsDir = outDir+ FilesAndFoldersManagement.attachmentsDir;
+
             extractedMetadata.setPstFileName(pstFile.getMessageStore().getDisplayName());
             pathLevels.add(pstFile.getMessageStore().getDisplayName());
+
             createSubTree(rootFolder, extractedMetadata, pathLevels);
-            identifyAndCreateAttachments(extractedMetadata);
-            JsonMapper.jsonWriter(extractedMetadata, OUTPUT_DIR+pstFile.getMessageStore().getDisplayName()+".json");
+            identifyAndCreateAttachments(extractedMetadata, attachmentsDir);
+            JsonMapper.jsonWriter(extractedMetadata, outDir+pstFileName+".json");
         } catch (PSTException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,14 +84,13 @@ public class PstReaderImpl implements PstReaderRepo {
         }
     }
 
-    public void identifyAndCreateAttachments(ExtractedMetadata extractedMetadata){
+    public void identifyAndCreateAttachments(ExtractedMetadata extractedMetadata, String attachmentsDirPath){
         for(Email email : extractedMetadata.getEmails()){
             if(email.isHasAttachment()){
                 email.getAttachments()
                         .replaceAll(attachment -> {
                             try {
-//                                attachmentWriter.createAttachment(ATTACHMENT_DIR, attachment);
-                                attachment = siegfriedService.postToSiegfried(attachment);
+                                attachment = siegfriedService.postToSiegfried(attachment,attachmentsDirPath);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
