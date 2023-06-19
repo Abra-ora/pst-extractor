@@ -16,10 +16,7 @@ public class JsonMapper {
 
     public static void jsonWriter(ExtractedMetadata extractedMetadata, String filePath){
         try {
-
-                logger.info("JSON MAPPER Email Path ==> "+filePath);
-                jsonMapper.writer().writeValue(new File(filePath), extractedMetadata);
-
+             jsonMapper.writer().writeValue(new File(filePath), extractedMetadata);
         }catch (IOException e){
             e.printStackTrace();
         }

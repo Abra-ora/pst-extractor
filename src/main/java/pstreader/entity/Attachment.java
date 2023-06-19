@@ -44,7 +44,7 @@ public class Attachment {
     public static Attachment simpleMapper(PSTAttachment pstAttachment){
         Attachment attachment = new Attachment();
         try{
-            if(pstAttachment.getFilename().isEmpty()){
+            if(pstAttachment.getFilename().isEmpty() ){
                 attachment.setName("Embedded_attachment");
             }else {
                 attachment.setName(pstAttachment.getFilename());

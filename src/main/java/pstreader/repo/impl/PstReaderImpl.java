@@ -55,7 +55,7 @@ public class PstReaderImpl implements PstReaderRepo {
             extractedMetadata.setPstFileName(pstFile.getMessageStore().getDisplayName());
             pathLevels.add(pstFile.getMessageStore().getDisplayName());
             createSubTree(rootFolder, extractedMetadata, pathLevels);
-            scanAttachments(extractedMetadata);
+            identifyAndCreateAttachments(extractedMetadata);
             JsonMapper.jsonWriter(extractedMetadata, OUTPUT_DIR+pstFile.getMessageStore().getDisplayName()+".json");
         } catch (PSTException | IOException e) {
             throw new RuntimeException(e);
@@ -81,12 +81,13 @@ public class PstReaderImpl implements PstReaderRepo {
         }
     }
 
-    public void scanAttachments(ExtractedMetadata extractedMetadata){
+    public void identifyAndCreateAttachments(ExtractedMetadata extractedMetadata){
         for(Email email : extractedMetadata.getEmails()){
             if(email.isHasAttachment()){
                 email.getAttachments()
                         .replaceAll(attachment -> {
                             try {
+//                                attachmentWriter.createAttachment(ATTACHMENT_DIR, attachment);
                                 attachment = siegfriedService.postToSiegfried(attachment);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

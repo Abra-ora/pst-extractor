@@ -30,6 +30,7 @@ public class SiegfriedService {
     }
 
     private HttpUrl getSiegfriedUrl(Attachment attachment) throws IOException {
+        // create attachment file
         attachmentWriter.createAttachment(ATTACHMENT_DIR, attachment);
         File attachmentsDir = new File(ATTACHMENT_DIR);
         Path attachmentsDirPath = Path.of(attachmentsDir.getAbsolutePath());

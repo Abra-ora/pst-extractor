@@ -1,6 +1,0 @@
-
-6
-java:S1700"Rename field "jsonMapper"(¥“˜Ï8íšÊ‹1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(™ÓÏüÿÿÿÿ8ïšÊ‹1
-W
-java:S1118":Add a private constructor to hide the implicit public one.(æ§È„8ôšÊ‹1

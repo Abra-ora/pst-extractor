@@ -14,7 +14,7 @@ public class Main {
 
     public static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args){
         BasicConfigurator.configure();
         FilesAndFoldersManagement filesAndFoldersManagement = new FilesAndFoldersManagement();
         AttachmentWriter attachmentWriter = new AttachmentWriter(filesAndFoldersManagement);
@@ -30,6 +30,7 @@ public class Main {
         // PST 3:  /home/ibtal/projects/pst/pst-files/support.pst
         // PST4 :  /home/ibtal/projects/pst/pst-files/enron.pst
     }
+
 
 
 }
