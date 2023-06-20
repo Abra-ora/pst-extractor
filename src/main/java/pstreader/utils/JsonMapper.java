@@ -14,11 +14,11 @@ public class JsonMapper {
     private static final ObjectMapper jsonMapper = new ObjectMapper();
 
 
-    public static void jsonWriter(ExtractedMetadata extractedMetadata, String filePath){
+    public static void jsonWriter(ExtractedMetadata extractedMetadata, String filePath) throws IOException {
         try {
              jsonMapper.writer().writeValue(new File(filePath), extractedMetadata);
         }catch (IOException e){
-            e.printStackTrace();
+            throw new IOException();
         }
     }
 }

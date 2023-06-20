@@ -22,10 +22,9 @@ public class Main {
         PstReaderRepo pstReaderRepo = new PstReaderImpl(filesAndFoldersManagement, siegfriedService);
 
         filesAndFoldersManagement.checkIfPathIsValid(args[0]);
-        FilesAndFoldersManagement.checkIfDir(args[1]);
+        if(args[1] != null) FilesAndFoldersManagement.checkIfDir(args[1]);
 
         pstReaderRepo.createTreeStructure(args[0]);
-
 
         // PST 1:  /home/ibtal/projects/pst/pst-files/user1@test.lab.pst
         // PST 2:  /home/ibtal/projects/pst/pst-files/sample.pst

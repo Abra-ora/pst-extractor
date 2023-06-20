@@ -18,11 +18,11 @@ public class AttachmentWriter {
     public boolean createAttachment(String pathDir, Attachment attachment) throws IOException {
         boolean isAttachmentCreated = false;
             byte[] buf = new byte[BUFFER_SIZE];
-            logger.info("Path dir : "+pathDir+" - attachment : "+attachment.getName());
+//            logger.info("Path dir : "+pathDir+" - attachment : "+attachment.getName());
             filesAndFoldersManagement.createDir(pathDir);
             try (OutputStream outputStream = new FileOutputStream(pathDir + "/" + attachment.getName())) {
                 int length;
-                logger.info("Creating attachment file "+attachment.getName()+" ...");
+//                logger.info("Creating attachment file "+attachment.getName()+" ...");
                 while ((length = attachment.getContent().read(buf)) != -1) {
                     outputStream.write(buf, 0, length);
                 }

@@ -25,7 +25,7 @@ public class FilesAndFoldersManagement {
             File directory = new File(dirPath);
             if(!directory.exists()){
                 directory.mkdirs();
-                logger.info("Directory created : "+dirPath);
+//                logger.info("Directory created : "+dirPath);
             }
         }catch (Exception e){
             e.printStackTrace();
